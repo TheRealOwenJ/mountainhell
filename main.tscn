@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://n0wsbuhpmtr2"]
+
+[ext_resource type="Script" uid="uid://brhc7xlpxs4sg" path="res://setupviewport.gd" id="1_h2yge"]
+[ext_resource type="Shader" uid="uid://b3tio4vd8fh5b" path="res://pixel.gdshader" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cg2ou7srau6iv" path="res://level.tscn" id="2_h2yge"]
+[ext_resource type="AudioStream" uid="uid://chl2xtu73682v" path="res://hell.wav" id="4_1bvp3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o3yby"]
+shader = ExtResource("2_0xm2m")
+shader_parameter/amount = 400
+
+[node name="Root" type="Control" unique_id=232986296]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h2yge")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=56135782]
+size = Vector2i(960, 720)
+
+[node name="Control" parent="SubViewport" unique_id=628070114 instance=ExtResource("2_h2yge")]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2145265320]
+material = SubResource("ShaderMaterial_o3yby")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2114010181]
+stream = ExtResource("4_1bvp3")
+autoplay = true

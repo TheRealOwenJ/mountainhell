@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://cg2ou7srau6iv"]
+
+[ext_resource type="Script" uid="uid://bxg8v0ts5chcp" path="res://hills.gd" id="1_0b4ue"]
+[ext_resource type="PackedScene" uid="uid://dviago8yttds" path="res://hill.tscn" id="2_f2txt"]
+[ext_resource type="Script" uid="uid://bbv8exdnsuhpb" path="res://player.gd" id="2_vonw3"]
+[ext_resource type="Shader" uid="uid://42mgthudd75e" path="res://ball.gdshader" id="5_1ainy"]
+[ext_resource type="Texture2D" uid="uid://drp3ysclgvh22" path="res://floor.jpg" id="6_1ainy"]
+[ext_resource type="Texture2D" uid="uid://c4kq40jyh0ii0" path="res://blueball.png" id="6_n6hdu"]
+[ext_resource type="AudioStream" uid="uid://cwr4wu3l8buea" path="res://blip.wav" id="7_2orkt"]
+[ext_resource type="Script" uid="uid://cfkvyf48bck0j" path="res://lava.gd" id="7_i2t4f"]
+[ext_resource type="Shader" uid="uid://coxk8g0pqokgt" path="res://wobble.gdshader" id="7_km5ld"]
+[ext_resource type="FontFile" uid="uid://df3ia0nxeutby" path="res://Merriweather-Light.ttf" id="9_8cye3"]
+[ext_resource type="Script" uid="uid://b04bexd4pa03q" path="res://text.gd" id="10_2orkt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n6hdu"]
+shader = ExtResource("7_km5ld")
+shader_parameter/wobble_speed = 3.0
+shader_parameter/wobble_strength = 0.008
+shader_parameter/wobble_frequency = 12.0
+shader_parameter/vertical_wobble = 0.003
+shader_parameter/color_bleed = 0.002
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_km5ld"]
+load_path = "res://.godot/imported/hell.jpg-64bb105e04ebf7d39f7bcfd7785250e4.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f2txt"]
+shader = ExtResource("5_1ainy")
+shader_parameter/ball_texture = ExtResource("6_n6hdu")
+shader_parameter/shading = 0.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_1ainy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5dyy1"]
+radius = 40.1995
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vsb4k"]
+size = Vector2(3999, 514.5)
+
+[node name="Control" type="Control" unique_id=628070114]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0b4ue")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=329758643]
+material = SubResource("ShaderMaterial_n6hdu")
+layout_mode = 0
+offset_left = -1134.0
+offset_top = -844.0
+offset_bottom = 719.0
+texture = SubResource("CompressedTexture2D_km5ld")
+
+[node name="Hill" parent="." unique_id=253202514 instance=ExtResource("2_f2txt")]
+
+[node name="Player" type="RigidBody2D" parent="." unique_id=148386427]
+position = Vector2(270, 466)
+script = ExtResource("2_vonw3")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1914329922]
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Player" unique_id=505022668]
+material = SubResource("ShaderMaterial_f2txt")
+position = Vector2(-1.1920929e-07, 0)
+scale = Vector2(80, 80)
+mesh = SubResource("QuadMesh_1ainy")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Player" unique_id=802362244]
+shape = SubResource("CircleShape2D_5dyy1")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Player" unique_id=1052533740]
+stream = ExtResource("7_2orkt")
+volume_db = -6.0
+
+[node name="Lava" type="StaticBody2D" parent="." unique_id=824720270]
+script = ExtResource("7_i2t4f")
+
+[node name="TextureRect" type="TextureRect" parent="Lava" unique_id=1152831839]
+texture_repeat = 2
+offset_left = -1000.0
+offset_top = 719.0
+offset_right = 19000.0
+offset_bottom = 1799.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_1ainy")
+stretch_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="Lava" unique_id=355330860]
+offset_left = -1000.0
+offset_top = 935.0
+offset_right = 3000.0
+offset_bottom = 1386.0
+
+[node name="Area2D" type="Area2D" parent="Lava" unique_id=1027174656]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lava/Area2D" unique_id=1610194577]
+position = Vector2(1000.5, 1128.75)
+shape = SubResource("RectangleShape2D_vsb4k")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=372271613]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1405091367]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -312.5
+offset_top = -120.0
+offset_right = 312.5
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("9_8cye3")
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+autowrap_mode = 3
+script = ExtResource("10_2orkt")
+
+[connection signal="body_entered" from="Lava/Area2D" to="Lava" method="fallin"]

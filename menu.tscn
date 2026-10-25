@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://di3kbf0fv7i82"]
+
+[ext_resource type="AudioStream" uid="uid://dirvnt2lak872" path="res://theme.wav" id="1_lti8b"]
+[ext_resource type="Script" uid="uid://bvh17omuiq4h" path="res://menu.gd" id="1_ytr4m"]
+[ext_resource type="Shader" uid="uid://coxk8g0pqokgt" path="res://wobble.gdshader" id="2_ouk20"]
+[ext_resource type="Texture2D" uid="uid://dbyys3ler14oa" path="res://logo.png" id="3_4hy44"]
+[ext_resource type="FontFile" uid="uid://df3ia0nxeutby" path="res://Merriweather-Light.ttf" id="4_ytr4m"]
+[ext_resource type="Script" uid="uid://cy66cme7rc4jm" path="res://myinfo.gd" id="6_l48gv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mae5d"]
+shader = ExtResource("2_ouk20")
+shader_parameter/wobble_speed = 3.0
+shader_parameter/wobble_strength = 0.008
+shader_parameter/wobble_frequency = 12.0
+shader_parameter/vertical_wobble = 0.003
+shader_parameter/color_bleed = 0.002
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4hy44"]
+load_path = "res://.godot/imported/hell.jpg-64bb105e04ebf7d39f7bcfd7785250e4.ctex"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tst8m"]
+bg_color = Color(0.10992753, 0.0017431699, 4.512258e-09, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4f16"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u744v"]
+bg_color = Color(0.094720505, 4.8506774e-08, 6.016344e-09, 1)
+
+[node name="Menu" type="Control" unique_id=135768011]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ytr4m")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1575481315]
+stream = ExtResource("1_lti8b")
+autoplay = true
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1975429962]
+material = SubResource("ShaderMaterial_mae5d")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_4hy44")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1091766660]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 100.0
+offset_right = 200.0
+offset_bottom = 300.0
+grow_horizontal = 2
+texture = ExtResource("3_4hy44")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="." unique_id=1122545106]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_ytr4m")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_tst8m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_e4f16")
+theme_override_styles/hover = SubResource("StyleBoxFlat_u744v")
+text = "PLAY"
+
+[node name="MyInfo" type="RichTextLabel" parent="." unique_id=130605787]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+bbcode_enabled = true
+text = "by trojdev - [url=https://newo.live/]my website[/url]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_l48gv")
+
+[connection signal="pressed" from="Button" to="." method="begin"]
+[connection signal="meta_clicked" from="MyInfo" to="MyInfo" method="click"]

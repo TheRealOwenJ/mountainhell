@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dviago8yttds"]
+
+[ext_resource type="Shader" uid="uid://coxk8g0pqokgt" path="res://wobble.gdshader" id="1_vpm4q"]
+[ext_resource type="Texture2D" uid="uid://ccdff7xxcnvpf" path="res://hill.jpg" id="1_x5cog"]
+[ext_resource type="Texture2D" uid="uid://sy3fa2e6p3tb" path="res://hell.jpg" id="2_j8f03"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ods5"]
+shader = ExtResource("1_vpm4q")
+shader_parameter/wobble_speed = 3.0
+shader_parameter/wobble_strength = 0.008
+shader_parameter/wobble_frequency = 12.0
+shader_parameter/vertical_wobble = 0.003
+
+[node name="Hill" type="StaticBody2D" unique_id=253202514]
+z_index = -1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1355107427]
+material = SubResource("ShaderMaterial_0ods5")
+offset_top = -843.0
+offset_right = 1134.0
+offset_bottom = 720.0
+texture = ExtResource("2_j8f03")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1615728126]
+texture_repeat = 2
+scale = Vector2(19.2, 14.4)
+color = Color(0.43134022, 0.43134025, 0.43134025, 1)
+texture = ExtResource("1_x5cog")
+texture_scale = Vector2(20, 20)
+polygon = PackedVector2Array(0, 50, 50, 0, 100, 0, 100, 50, 50, 50)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1850537502]
+visible = false
+scale = Vector2(19.2, 14.4)
+polygon = PackedVector2Array(0, 50, 50, 50, 50, 0)
